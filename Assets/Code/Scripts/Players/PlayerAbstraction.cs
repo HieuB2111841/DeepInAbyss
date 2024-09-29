@@ -21,7 +21,7 @@ namespace Game.Players
 
         protected virtual void LoadComponents()
         {
-            this.LoadComponent(ref _player);
+            this.LoadComponent(ref _player, isDebug: true);
         }
 
     }

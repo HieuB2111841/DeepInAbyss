@@ -19,8 +19,7 @@ namespace Managers.Extension
             component ??= self.GetComponentInParent<T>();
 
             if (isDebug)
-                if (component) Debug.Log($"{self.name}: {component.name} load successed!", self);
-                else Debug.LogWarning($"{self.name}: {typeof(T)} load failed!", self);
+                if (component == null) Debug.LogWarning($"{self.name}: {typeof(T)} load failed!", self);
 
             return component != null;
         }

@@ -15,7 +15,9 @@ namespace Game.Entities
 
         private int _horizontalSpeedHashCode;
         private int _verticalSpeedHashCode;
-        private int _jumpHashCode;
+        private int _isCrouchHashCode;
+        private int _isClimbHashCode;
+        private int _isClimIdlebHashCode;
 
 
         private void Awake()
@@ -27,7 +29,9 @@ namespace Game.Entities
         {
             _horizontalSpeedHashCode = Animator.StringToHash("HorizontalSpeed");
             _verticalSpeedHashCode = Animator.StringToHash("VerticalSpeed");
-            _jumpHashCode = Animator.StringToHash("Jump");
+            _isCrouchHashCode = Animator.StringToHash("IsCrouch");
+            _isClimbHashCode = Animator.StringToHash("IsClimb");
+            _isClimIdlebHashCode = Animator.StringToHash("IsClimbIdle");
 
         }
 
@@ -37,10 +41,15 @@ namespace Game.Entities
             this.LoadComponent(ref _animator);
         }
 
+        public void SetSpeed(Vector2 direction)
+        {
+            SetHorizontalSpeed(direction.x);
+            SetVerticalSpeed(direction.y);
+        }
+
         public void SetHorizontalSpeed(float speed)
         {
             _animator.SetFloat(_horizontalSpeedHashCode, Mathf.Abs(speed));
-            this.Flip(speed);
         }
 
         public void SetVerticalSpeed(float speed)
@@ -49,14 +58,32 @@ namespace Game.Entities
 
         }
 
-
-        private void Flip(float speed)
+        public void SetIsCrouch(bool state)
         {
-            if (speed > 0.02f)
+            _animator.SetBool(_isCrouchHashCode, state);
+        }
+
+        public void SetIsClimb(bool state)
+        {
+            _animator.SetBool(_isClimbHashCode, state);
+            if (state == false)
+            {
+                this.SetIsClimbIdle(false);
+            }
+        }
+
+        public void SetIsClimbIdle(bool state)
+        {
+            _animator.SetBool(_isClimIdlebHashCode, state);
+        }
+
+        public void Flip(float axis)
+        {
+            if (axis > 0.02f)
             {
                 _sprite.flipX = false;
             }
-            if (speed < -0.02)
+            if (axis < -0.02f)
             {
                 _sprite.flipX = true;
             }

@@ -1,4 +1,5 @@
 using Managers.Extension;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Entities
@@ -7,61 +8,49 @@ namespace Game.Entities
     {
         private CharacterAnimation _animation;
 
-        [SerializeField] private Collider2D _headCollider;
-        [SerializeField] private Collider2D _bodyCollider;
+        #region Properties
+        public override bool IsCrouch
+        {
+            protected set
+            {
+                base.IsCrouch = value;
+                _animation.SetIsCrouch(value);
+            }
+        }
 
-        [SerializeField] private LayerMask _groundLayer;
-        private bool _isGrounded = false;
+        public override bool IsClimb
+        {
+            protected set
+            {
+                base.IsClimb = value;
+                _animation.SetIsClimb(value);
+            }
+        }
+        #endregion
 
         protected override void LoadComponents()
         {
             base.LoadComponents();
             this.LoadComponent(ref _animation);
 
-            this.CheckComponent(_headCollider, isDebug: true);
-            this.CheckComponent(_bodyCollider, isDebug: true);
         }
 
-        private void FixedUpdate()
+        protected override void FixedUpdate()
         {
-            this.GroundHandle();
-
-            _animation.SetVerticalSpeed(_rigidbody2D.velocity.y);
-            _animation.SetHorizontalSpeed(_rigidbody2D.velocity.x);
+            base.FixedUpdate();
+            _animation.SetSpeed(_rigidbody2D.velocity);
         }
 
-        public virtual void Move(float axis)
+        public override void HorizontalMove(float axis)
         {
-            if(_isGrounded)
-            {
-                float speed = axis * Stats.Speed * _rigidbody2D.mass * 100f;
-                _rigidbody2D.AddForce(Vector2.right * speed, ForceMode2D.Force);
-                
-                this.VelocityHandle();
-            }
+            base.HorizontalMove(axis);
+            _animation.Flip(axis);
         }
 
-        public virtual void Jump()
+        public override void Climb(Vector2 axis)
         {
-            if (_isGrounded)
-            {
-                float force = Stats.JumpHeight * _rigidbody2D.mass * 2f;
-                _rigidbody2D.AddForce(Vector2.up * force, ForceMode2D.Impulse);
-            }
-
-        }
-
-        private void GroundHandle()
-        {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.8f, _groundLayer);
-            if (hit != default)
-            {
-                _isGrounded = true;
-            }
-            else
-            {
-                _isGrounded = false;
-            }
+            base.Climb(axis);
+            _animation.SetIsClimbIdle(axis.magnitude == 0);
         }
     }
 }

@@ -12,6 +12,8 @@ namespace Game.Players
         private PlayerUI _ui;
         private Character _character;
 
+
+        [SerializeField] private bool _isCharacterInsideCamera;
         public PlayerSetting Setting => _setting;
         public PlayerInput PlayerInput => _input;
         public PlayerCamera PlayerCamera => _camera;
@@ -21,26 +23,43 @@ namespace Game.Players
         protected override void LoadComponents()
         {
             base.LoadComponents();
-            this.LoadComponent(ref _setting);
-            this.LoadComponent(ref _input);
-            this.LoadComponent(ref _camera);
-            this.LoadComponent(ref _ui);
-            this.LoadComponent(ref _character);
+            this.LoadComponent(ref _setting, isDebug: true);
+            this.LoadComponent(ref _input, isDebug: true);
+            this.LoadComponent(ref _camera, isDebug: true);
+            this.LoadComponent(ref _ui, isDebug: true);
+            this.LoadComponent(ref _character, isDebug: true);
         }
 
+        private void Update()
+        {
+            this.ControlCamera();
+        }
 
         private void FixedUpdate()
         {
             this.ControlCharacter();
         }
 
-        public void ControlCharacter()
+        private void ControlCamera()
+        {
+            float distance = PlayerCamera.DistanceFromCenterCamera(Character.transform.position, out Vector2 direction);
+            if (distance > Setting.MaxDistanceFromCameraCenter)
+            {
+                PlayerCamera.TranslateCamera(direction.normalized * Setting.CameraMoveSpeed * Time.deltaTime);
+            }
+            if (distance > Setting.MaxDistanceFromCameraCenter * 2f)
+            {
+                PlayerCamera.TranslateCamera(direction.normalized * Setting.CameraMoveSpeed * 2f * Time.deltaTime);
+            }
+        }
+
+        private void ControlCharacter()
         {
             Vector2 moveAxis = PlayerInput.KeyAxis;
 
-            Character.Move(moveAxis.x);
+            Character.Move(moveAxis);
 
-            if(PlayerInput.GetJumpKey())
+            if (PlayerInput.GetJumpKey())
             {
                 Character.Jump();
             }
