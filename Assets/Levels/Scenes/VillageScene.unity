@@ -9268,6 +9268,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec72889e4233dcf4291b84eac361b1ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cameraMoveSpeed: 5
+  _maxDistanceFromCameraCenter: 0.15
 --- !u!114 &457822726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9280,6 +9282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3031374ac81f51744a1a05c164026bfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isCharacterInsideCamera: 0
 --- !u!1 &497281749
 GameObject:
   m_ObjectHideFlags: 0
@@ -9658,11 +9661,15 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: ec659d6899c446f42a8d27259efeb1eb, type: 2}
   - m_RefCount: 4
     m_Data: {fileID: 11400000, guid: e7731cbf0cada204f8d54cb9f863d063, type: 2}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   m_TileSpriteArray:
   - m_RefCount: 7
     m_Data: {fileID: 21300088, guid: ea48ee177af79284e846d353efa7f652, type: 3}
   - m_RefCount: 4
     m_Data: {fileID: 21300090, guid: ea48ee177af79284e846d353efa7f652, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   m_TileMatrixArray:
   - m_RefCount: 11
     m_Data:
@@ -9688,8 +9695,8 @@ Tilemap:
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Origin: {x: -23, y: -6, z: 0}
-  m_Size: {x: 34, y: 6, z: 1}
+  m_Origin: {x: -23, y: -7, z: 0}
+  m_Size: {x: 39, y: 7, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -9956,8 +9963,8 @@ GameObject:
   m_Component:
   - component: {fileID: 935497831}
   - component: {fileID: 935497835}
-  - component: {fileID: 935497833}
   - component: {fileID: 935497832}
+  - component: {fileID: 935497833}
   - component: {fileID: 935497834}
   m_Layer: 0
   m_Name: Character
@@ -9975,7 +9982,7 @@ Transform:
   m_GameObject: {fileID: 935497830}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.46, y: -2.308, z: 0}
+  m_LocalPosition: {x: -2.36, y: -2.308, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10015,9 +10022,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.38}
+  m_Offset: {x: 0, y: -0.35}
   serializedVersion: 2
-  m_Radius: 0.3
+  m_Radius: 0.32
 --- !u!58 &935497833
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -10050,9 +10057,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.1}
+  m_Offset: {x: 0, y: -0.05}
   serializedVersion: 2
-  m_Radius: 0.35
+  m_Radius: 0.3
 --- !u!50 &935497834
 Rigidbody2D:
   serializedVersion: 4
@@ -10065,11 +10072,11 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 10
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 3
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 33d7a2499a493b7469ec6ff6ffcc2b41, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -10096,7 +10103,7 @@ MonoBehaviour:
   _bodyCollider: {fileID: 935497832}
   _groundLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 192
 --- !u!1 &1219491840
 GameObject:
   m_ObjectHideFlags: 0
@@ -10609,6 +10616,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3ca9c20152994d459e87801e5841211, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gravityScale: 3
+  _speed: 2
+  _airSpeed: 2
+  _crouchSpeed: 1
+  _climbSpeed: 1
+  _jumpHeight: 2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
