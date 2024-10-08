@@ -45,11 +45,11 @@ namespace Game.Players
             float distance = PlayerCamera.DistanceFromCenterCamera(Character.transform.position, out Vector2 direction);
             if (distance > Setting.MaxDistanceFromCameraCenter)
             {
-                PlayerCamera.TranslateCamera(direction.normalized * Setting.CameraMoveSpeed * Time.deltaTime);
+                PlayerCamera.MoveSmoothCamera(Character.transform.position, Setting.CameraMoveSpeed * Time.deltaTime);
             }
-            if (distance > Setting.MaxDistanceFromCameraCenter * 2f)
+            if (distance > Setting.MaxDistanceFromCameraCenter * 10f)
             {
-                PlayerCamera.TranslateCamera(direction.normalized * Setting.CameraMoveSpeed * 2f * Time.deltaTime);
+                PlayerCamera.MoveCameratoTo(Character.transform.position);
             }
         }
 

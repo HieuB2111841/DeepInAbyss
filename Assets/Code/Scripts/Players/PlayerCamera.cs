@@ -6,7 +6,8 @@ namespace Game.Players
     public class PlayerCamera : PlayerAbstraction
     {
         public static readonly Vector2 centerCamera = Vector2.one * 0.5f;
-
+        public static readonly Vector3 cameraZ = Vector3.back * 10f;
+        
 
         private Camera _mainCamera;
 
@@ -24,6 +25,18 @@ namespace Game.Players
         public void TranslateCamera(Vector2 direction)
         {
             MainCamera.transform.Translate(direction);
+        }
+
+        public void MoveSmoothCamera(Vector2 position, float deltaTime = -1f)
+        {
+            if(deltaTime == -1f) deltaTime = Time.deltaTime;
+
+            MainCamera.transform.position = Vector3.Lerp(MainCamera.transform.position, (Vector3)position + cameraZ, deltaTime);
+        }
+
+        public void MoveCameratoTo(Vector2 position)
+        {
+            MainCamera.transform.position = (Vector3)position + cameraZ;
         }
 
 
