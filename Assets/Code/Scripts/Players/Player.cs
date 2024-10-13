@@ -65,13 +65,13 @@ namespace Game.Players
             Character.Move(moveAxis);
         }
 
-            {
-                UI.SetHealth(remaining: value);
-            };
-            Character.Stats.Health.OnValueChanged += (value) =>
-            {
-                UI.SetHealth(max: value);
-            };
+        private void InitUI()
+        {
+            Character.Stats.Health.OnRemainingValueChanged += (value) => UI.SetHealth(remaining: value);
+            Character.Stats.Health.OnValueChanged += (value) => UI.SetHealth(max: value);
+            Character.Stats.Damage.OnValueChanged += (value) => UI.UIDamage = value;
+            Character.Stats.Armor.OnValueChanged += (value) => UI.UIArmor = value;
+            // Character.Stats.Speed.OnValueChanged += (value) => UI.UISpeed = value;
         }
 
         private void HandleUI()

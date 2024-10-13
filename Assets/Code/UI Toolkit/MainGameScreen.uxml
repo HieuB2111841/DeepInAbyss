@@ -1,6 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Code/UI%20Toolkit/Uss/Game.uss?fileID=7433441132597879392&amp;guid=534e83febcf07a443a16a27711420fe5&amp;type=3#Game" />
     <Style src="project://database/Assets/Resources/UIStyleSheets/UISlideStatStyle.uss?fileID=7433441132597879392&amp;guid=fece650bd44459747aebceaefc7fd10e&amp;type=3#UISlideStatStyle" />
+    <Style src="project://database/Assets/Resources/UIStyleSheets/UIStatInfoStyle.uss?fileID=7433441132597879392&amp;guid=459d58dd8c9915644a5d2b42caf7ab1d&amp;type=3#UIStatInfoStyle" />
     <ui:VisualElement name="Container" class="container">
         <ui:VisualElement name="Action" style="flex-grow: 1; position: absolute; right: 0; top: 0; width: 200px; height: 50px;" />
         <ui:VisualElement name="Character" style="flex-grow: 1; position: absolute; width: 500px; height: 140px; left: 0; top: 0; align-items: flex-end; flex-direction: row; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px; background-image: url(&apos;project://database/Assets/Arts/Textures/Wooden/WoodenTexture.png?fileID=2800000&amp;guid=acfa364bfb12dfe4788f159cc473eada&amp;type=3#WoodenTexture&apos;); border-top-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-bottom-left-radius: 20px; -unity-background-image-tint-color: rgb(202, 202, 202);">
@@ -10,22 +11,9 @@
             <ui:VisualElement name="Info" style="flex-grow: 1; height: 90px; margin-left: 10px; margin-right: 10px;">
                 <Game.UIs.UISlideStat name="Health" />
                 <ui:VisualElement name="Stats" style="flex-grow: 1; flex-direction: row; flex-wrap: wrap; align-items: flex-start;">
-                    <ui:VisualElement name="Stat" style="flex-direction: row; width: 50%; align-items: flex-start; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px;">
-                        <ui:Label tabindex="-1" text="Type" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Type" style="min-width: 70px; font-size: 16px; -unity-text-align: middle-right; -unity-font-style: bold; letter-spacing: 2px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; color: rgb(210, 210, 210);" />
-                        <ui:Label tabindex="-1" text="00" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Value" style="flex-grow: 1; -unity-text-align: middle-left; font-size: 16px; letter-spacing: 2px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 10px; color: rgb(215, 215, 215);" />
-                    </ui:VisualElement>
-                    <ui:VisualElement name="Stat" style="flex-direction: row; width: 50%; align-items: flex-start; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px;">
-                        <ui:Label tabindex="-1" text="Type" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Type" style="min-width: 70px; font-size: 16px; -unity-text-align: middle-right; -unity-font-style: bold; letter-spacing: 2px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; color: rgb(210, 210, 210);" />
-                        <ui:Label tabindex="-1" text="00" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Value" style="flex-grow: 1; -unity-text-align: middle-left; font-size: 16px; letter-spacing: 2px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 10px; color: rgb(215, 215, 215);" />
-                    </ui:VisualElement>
-                    <ui:VisualElement name="Stat" style="flex-direction: row; width: 50%; align-items: flex-start; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px;">
-                        <ui:Label tabindex="-1" text="Type" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Type" style="min-width: 70px; font-size: 16px; -unity-text-align: middle-right; -unity-font-style: bold; letter-spacing: 2px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; color: rgb(210, 210, 210);" />
-                        <ui:Label tabindex="-1" text="00" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Value" style="flex-grow: 1; -unity-text-align: middle-left; font-size: 16px; letter-spacing: 2px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 10px; color: rgb(215, 215, 215);" />
-                    </ui:VisualElement>
-                    <ui:VisualElement name="Stat" style="flex-direction: row; width: 50%; align-items: flex-start; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px;">
-                        <ui:Label tabindex="-1" text="Type" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Type" style="min-width: 70px; font-size: 16px; -unity-text-align: middle-right; -unity-font-style: bold; letter-spacing: 2px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; color: rgb(210, 210, 210);" />
-                        <ui:Label tabindex="-1" text="00" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Value" style="flex-grow: 1; -unity-text-align: middle-left; font-size: 16px; letter-spacing: 2px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 10px; color: rgb(215, 215, 215);" />
-                    </ui:VisualElement>
+                    <Game.UIs.UIStatInfo name="Damage" type="Damage" />
+                    <Game.UIs.UIStatInfo name="Armor" type="Armor" />
+                    <Game.UIs.UIStatInfo name="Speed" type="Speed" />
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
