@@ -1,0 +1,43 @@
+.slide-stat {
+    flex-grow: 1;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    background-color: rgb(87, 87, 87);
+    overflow: hidden;
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-left-color: rgb(221, 172, 57);
+    border-right-color: rgb(221, 172, 57);
+    border-top-color: rgb(221, 172, 57);
+    border-bottom-color: rgb(221, 172, 57);
+    height: 20px;
+}
+
+.filter {
+    height: 100%;
+    background-color: rgb(255, 66, 66);
+}
+
+.value {
+    position: absolute;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    flex-grow: 1;
+    width: 100%;
+    height: 100%;
+    -unity-text-align: middle-center;
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold-and-italic;
+    letter-spacing: 5px;
+    font-size: 12px;
+}

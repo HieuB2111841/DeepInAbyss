@@ -30,6 +30,11 @@ namespace Game.Players
             this.LoadComponent(ref _character, isDebug: true);
         }
 
+        private void Start()
+        {
+            this.InitUI();
+        }
+
         private void Update()
         {
             this.ControlCamera();
@@ -38,6 +43,7 @@ namespace Game.Players
         private void FixedUpdate()
         {
             this.ControlCharacter();
+            this.HandleUI();
         }
 
         private void ControlCamera()
@@ -56,13 +62,21 @@ namespace Game.Players
         private void ControlCharacter()
         {
             Vector2 moveAxis = PlayerInput.KeyAxis;
-
             Character.Move(moveAxis);
+        }
 
-            if (PlayerInput.GetJumpKey())
             {
-                Character.Jump();
-            }
+                UI.SetHealth(remaining: value);
+            };
+            Character.Stats.Health.OnValueChanged += (value) =>
+            {
+                UI.SetHealth(max: value);
+            };
+        }
+
+        private void HandleUI()
+        {
+
         }
     }
 }
