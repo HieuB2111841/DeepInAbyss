@@ -7,11 +7,14 @@ using UnityEngine;
 namespace Game.Entities
 {
     [RequireComponent(typeof(Animator), typeof(SpriteRenderer))]
-    public class CharacterAnimation : MonoBehaviour
+    public class CharacterAnimation : MonoBehaviour, ICharacterComponent
     {
+        private Character _character;
+
         private SpriteRenderer _sprite;
         private Animator _animator;
 
+        public Character Character => _character;
 
         private int _horizontalSpeedHashCode;
         private int _verticalSpeedHashCode;
@@ -19,8 +22,7 @@ namespace Game.Entities
         private int _isClimbHashCode;
         private int _isClimIdlebHashCode;
 
-
-        private void Awake()
+        protected virtual void Awake()
         {
             this.LoadComponents();
         }
@@ -37,6 +39,8 @@ namespace Game.Entities
 
         protected virtual void LoadComponents()
         {
+            this.LoadComponent(ref _character);
+
             this.LoadComponent(ref _sprite);
             this.LoadComponent(ref _animator);
         }

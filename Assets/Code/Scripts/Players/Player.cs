@@ -62,7 +62,12 @@ namespace Game.Players
         private void ControlCharacter()
         {
             Vector2 moveAxis = PlayerInput.KeyAxis;
-            Character.Move(moveAxis);
+            Character.Movement.Move(moveAxis);
+
+            if (PlayerInput.GetJumpKey())
+            {
+                Character.Movement.Jump();
+            }
         }
 
         private void InitUI()
