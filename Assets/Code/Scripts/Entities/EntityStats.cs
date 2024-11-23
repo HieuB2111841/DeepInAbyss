@@ -21,6 +21,9 @@ namespace Game.Entities
         [SerializeField] protected float _crouchSpeed = 1f;
         [SerializeField] protected float _climbSpeed = 1f;
 
+        [Header("Utilities")]
+        [SerializeField] protected float _viewDistance = 10f;
+
         [Header("Stats")]
         [SerializeField] protected SlideStat _health = new();
         [SerializeField] protected Stat _shield = new();
@@ -43,6 +46,8 @@ namespace Game.Entities
         public float AirSpeed => _airSpeed;
         public float CrouchSpeed => _crouchSpeed;
         public float ClimbSpeed => _climbSpeed;
+
+        public float ViewDistance => _viewDistance;
 
         public SlideStat Health => _health;
         public Stat Shield => _shield;
@@ -67,10 +72,13 @@ namespace Game.Entities
 
             _gravityScale = _baseStats.GravityScale;
             _jumpHeight = _baseStats.JumpHeight;
+
             _speed = _baseStats.Speed;
             _airSpeed = _baseStats.AirSpeed;
             _crouchSpeed = _baseStats.CrouchSpeed;
             _climbSpeed = _baseStats.ClimbSpeed;
+
+            _viewDistance = _baseStats.ViewDistance;
 
             Health.Add(Owner.transform, reason, _baseStats.Health);
             Damage.Add(Owner.transform, reason, _baseStats.Damage);
@@ -82,6 +90,7 @@ namespace Game.Entities
             Agent sender = new Agent(Owner.transform, "send damage", Damage.Value * damageScale);
             victim.Stats.TakeDamage(sender);
         }
+
         public void SendDamage(Transform victim, float damageScale = 1f)
         {
             if (victim.TryGetComponent(out Entity entity))

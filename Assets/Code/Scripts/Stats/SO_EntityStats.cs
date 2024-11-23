@@ -17,6 +17,9 @@ namespace Game.Entities.Stats
         [SerializeField] protected float _crouchSpeed = 1f;
         [SerializeField] protected float _climbSpeed = 1f;
 
+        [Header("Utilities")]
+        [SerializeField] protected float _viewDistance = 10f;
+
         [Header("Stats")]
         [SerializeField] protected float _health = 100f;
         [SerializeField] protected float _damage = 10f;
@@ -30,6 +33,8 @@ namespace Game.Entities.Stats
         public float AirSpeed => _airSpeed;
         public float CrouchSpeed => _crouchSpeed;
         public float ClimbSpeed => _climbSpeed;
+
+        public float ViewDistance => _viewDistance;
 
         public float Health => _health;
         public float Damage => _damage;

@@ -1,11 +1,16 @@
 using UnityEngine;
 using Game.Entities;
+using Managers;
 using Managers.Extension;
+using Game.Objects;
 
 namespace Game.Players
 {
     public class Player : PlayerAbstraction
     {
+        private static Player _instance;
+        public static Player Instacne => _instance;
+
         private PlayerSetting _setting;
         private PlayerInput _input;
         private PlayerCamera _camera;
@@ -19,6 +24,14 @@ namespace Game.Players
         public PlayerCamera PlayerCamera => _camera;
         public PlayerUI UI => _ui;
         public Character Character => _character;
+
+
+        protected override void Awake()
+        {
+            if (_instance == null) _instance = this;
+            else Debug.LogError("Player is singleton");
+            base.Awake();
+        }
 
         protected override void LoadComponents()
         {
@@ -38,6 +51,7 @@ namespace Game.Players
         private void Update()
         {
             this.ControlCamera();
+            this.TestStats();
         }
 
         private void FixedUpdate()
@@ -82,6 +96,42 @@ namespace Game.Players
         private void HandleUI()
         {
 
+        }
+
+        private void TestStats()
+        {
+
+            if (PlayerInput.GetKeyDown(KeyCode.Q))
+            {
+                Character.Stats.SendDamage(Character, 1f);
+            }
+
+            if (PlayerInput.GetMouseButtonDown(MouseButton.Left))
+            {
+                Vector2 mousePosition = PlayerInput.MousePosition;
+                FireBall fireBall = SpawnedObjectSystem.Instance.Spawn("FireBall") as FireBall;
+                if (fireBall != null)
+                {
+                    Vector2 dir = mousePosition - (Vector2)Character.transform.position;
+                    fireBall.transform.position = (Vector2)Character.transform.position + dir.normalized;
+                    fireBall.AddForce(dir.normalized * 10f);
+                }
+            }
+
+            if (PlayerInput.GetKeyDown(KeyCode.R))
+            {
+                Character.Stats.Health.Add(transform, "buff hp", 17f);
+            }
+
+            if(PlayerInput.GetKeyDown(KeyCode.Alpha1))
+            {
+                Character.Stats.Damage.Add(transform, "buff damage", 8f);
+            }
+
+            if (PlayerInput.GetKeyDown(KeyCode.Alpha2))
+            {
+                Character.Stats.Armor.Add(transform, "buff armor", 10f);
+            }
         }
     }
 }

@@ -10,7 +10,6 @@ namespace Game.Entities
     {
         protected Rigidbody2D _rigidbody2D;
 
-        [SerializeField] private Collider2D _headCollider;
         [SerializeField] private Collider2D _bodyCollider;
 
         protected EntityMovement _movement;
@@ -19,7 +18,6 @@ namespace Game.Entities
 
         #region Properties
         public Rigidbody2D Rigidbody2D => _rigidbody2D;
-        public Collider2D HeadCollider => _headCollider;
         public Collider2D BodyCollider => _bodyCollider;
         public EntityMovement Movement => _movement;
         public EntityStats Stats => _stats;
@@ -33,25 +31,7 @@ namespace Game.Entities
             this.LoadComponent(ref _movement);
             this.LoadComponent(ref _stats);
 
-            this.CheckComponent(_headCollider, isDebug: true);
             this.CheckComponent(_bodyCollider, isDebug: true);
         }
-
-        protected virtual void OnTriggerStay2D(Collider2D collision)
-        {
-            if (collision.gameObject.CompareTag("Climbable"))
-            {
-                Movement.CanClimb = true;
-            }
-        }
-
-        protected virtual void OnTriggerExit2D(Collider2D collision)
-        {
-            if (collision.gameObject.CompareTag("Climbable"))
-            {
-                Movement.CanClimb = false;
-            }
-        }
-
     }
 }

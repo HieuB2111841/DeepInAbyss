@@ -4,30 +4,14 @@ using UnityEngine;
 
 namespace Game.Entities
 {
-    public class EntityMovement : EntityAbstraction
+    public abstract class EntityMovement : EntityAbstraction
     {
-
-        protected float _currentSpeed;
         protected bool _isGrounded = false;
-        protected bool _isClimb = false;
 
-        protected bool _canUncrouch = true;
-        protected bool _canClimb = false;
-        protected bool _canJump = true;
-        protected float _jumpCoolDown = 0.5f;
 
         [SerializeField] protected LayerMask _groundLayer;
 
-        protected List<Collider2D> _colliders = new();
-        protected ContactFilter2D _crouchContactFilter = new();
-
-
         #region Properties
-        public virtual float Speed
-        {
-            get => _currentSpeed;
-            set => _currentSpeed = value;
-        }
 
         public virtual bool IsGrounded
         {
@@ -35,144 +19,30 @@ namespace Game.Entities
             set => _isGrounded = value;
         }
 
-        public virtual bool IsCrouch
-        {
-            get => Entity.HeadCollider?.isTrigger ?? false;
-            set
-            {
-                Entity.HeadCollider.isTrigger = value;
-            }
-        }
-
-        public virtual bool IsClimb
-        {
-            get => _isClimb;
-            set
-            {
-                _isClimb = value;
-                if (_isClimb) Entity.Rigidbody2D.gravityScale = 0f;
-                else Entity.Rigidbody2D.gravityScale = Entity.Stats.GravityScale;
-            }
-        }
 
         public bool IsOnAir
         {
-            get => !IsGrounded && !IsClimb;
+            get => !IsGrounded;
         }
 
-        public virtual bool CanUncrouch
-        {
-            get => _canUncrouch;
-            set
-            {
-                _canUncrouch = value;
-                if (!_canUncrouch)
-                {
-                    IsCrouch = true;
-                }
-            }
-        }
 
-        public virtual bool CanClimb
-        {
-            get => _canClimb;
-            set
-            {
-                _canClimb = value;
-            }
-        }
-
-        public virtual bool CanJump
-        {
-            get => _canJump;
-            set => _canJump = value;
-        }
         #endregion
 
 
         protected virtual void Start()
         {
-            _crouchContactFilter.SetLayerMask(_groundLayer);
+            
         }
 
-        public virtual void Move(Vector2 axis)
-        {
-            Crouch(axis.y < 0);
-            if ((CanClimb && axis.y != 0) || IsClimb)
-            {
-                Climb(axis);
-            }
-            else
-            {
-                this.HorizontalMove(axis.x);
-            }
-        }
+        public abstract void Move(Vector2 axis);
+        public virtual void Stop() { }
 
 
         protected virtual void FixedUpdate()
         {
             this.GroundHandle();
-            this.CrouchHandle();
-            this.ClimbHandle();
-            this.SpeedHandle();
         }
 
-        public virtual void HorizontalMove(float axis)
-        {
-            this.MoveByDirection(Vector2.right * Speed * axis);
-            this.ClampVelocity(xClamp: Speed);
-        }
-
-        public virtual void Jump()
-        {
-            if (CanJump && CanUncrouch && (IsGrounded || IsClimb))
-            {
-                this.SetVelocity(y: 0f);
-                this.AddForce(Vector2.up * Entity.Stats.JumpHeight);
-                IsClimb = false;
-
-                CanJump = false;
-                Invoke(nameof(ResetJump), _jumpCoolDown);
-            }
-        }
-
-
-        public virtual void Crouch(bool state)
-        {
-            if (IsGrounded && CanUncrouch)
-            {
-                IsCrouch = state;
-            }
-        }
-
-        public virtual void Climb(Vector2 axis)
-        {
-            IsClimb = true;
-            if (axis.magnitude == 0)
-            {
-                this.SetVelocity(0f, 0f);
-            }
-            else
-            {
-                this.MoveByDirection(Speed * axis.normalized);
-
-                float xClamp = Mathf.Abs(axis.x) * Speed;
-                float yClamp = Mathf.Abs(axis.y) * Speed;
-
-                this.ClampVelocity(xClamp, yClamp);
-            }
-        }
-
-        /// <summary>
-        ///     Change speed according to character state
-        /// </summary>
-        protected virtual void SpeedHandle()
-        {
-            if (IsClimb) Speed = Entity.Stats.ClimbSpeed;
-            else if (IsCrouch) Speed = Entity.Stats.CrouchSpeed;
-            else if (IsOnAir) Speed = Entity.Stats.AirSpeed;
-            else Speed = Entity.Stats.Speed;
-        }
 
         /// <summary>
         ///     Always check the character is collided with ground or not
@@ -185,35 +55,7 @@ namespace Game.Entities
             else IsGrounded = false;
         }
 
-        protected virtual void CrouchHandle()
-        {
-            if (IsGrounded)
-            {
-                // check headCollider collide with ground or not
-                if (Entity.HeadCollider.OverlapCollider(_crouchContactFilter, _colliders) > 0)
-                {
-                    CanUncrouch = false;
-                }
-                else CanUncrouch = true;
-            }
-            else
-            {
-                IsCrouch = false;
-            }
-        }
 
-        protected virtual void ClimbHandle()
-        {
-            if (!CanClimb || IsGrounded)
-            {
-                IsClimb = false;
-            }
-        }
-
-        protected virtual void ResetJump()
-        {
-            CanJump = true;
-        }
 
         /// <summary>
         ///     Limit each direction of velocity according to the passed parameter. 

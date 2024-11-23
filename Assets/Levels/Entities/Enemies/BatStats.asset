@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb34e5e10f8922746a30e7ebb24e61ed, type: 3}
-  m_Name: CharacterStats
+  m_Name: BatStats
   m_EditorClassIdentifier: 
-  _gravityScale: 3
-  _jumpHeight: 2
+  _gravityScale: 0
+  _jumpHeight: 0
   _speed: 2
   _airSpeed: 2
-  _crouchSpeed: 1
-  _climbSpeed: 1
+  _crouchSpeed: 0
+  _climbSpeed: 0
+  _viewDistance: 10
   _health: 100
   _damage: 10
-  _armor: 0
+  _armor: 10
