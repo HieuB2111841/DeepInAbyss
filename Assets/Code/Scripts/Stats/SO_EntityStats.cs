@@ -19,10 +19,12 @@ namespace Game.Entities.Stats
 
         [Header("Utilities")]
         [SerializeField] protected float _viewDistance = 10f;
+        [SerializeField] protected float _attackRange = 5f;
 
         [Header("Stats")]
         [SerializeField] protected float _health = 100f;
         [SerializeField] protected float _damage = 10f;
+        [SerializeField] protected float _attackSpeed = 2f;
         [SerializeField] protected float _armor = 10f;
 
 
@@ -35,9 +37,11 @@ namespace Game.Entities.Stats
         public float ClimbSpeed => _climbSpeed;
 
         public float ViewDistance => _viewDistance;
+        public float AttackRange => _attackRange;
 
         public float Health => _health;
         public float Damage => _damage;
+        public float AttackSpeed => _attackSpeed;
         public float Armor => _armor;
 
     }

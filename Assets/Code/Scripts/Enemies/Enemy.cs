@@ -1,20 +1,39 @@
 using Game.Players;
+using Managers.Extension;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Game.Entities
 {
     public class Enemy : Entity
     {
+        [SerializeField] protected NavMeshAgent _agent;
         [SerializeField] protected Transform _target;
         [SerializeField] protected LayerMask _targetLayer;
         [SerializeField] protected LayerMask _obstacleLayer;
+        [SerializeField] protected bool _isFindTarget = true;
         [SerializeField, Min(0.1f)] protected float _findRate = 1f;
 
-
-        public Transform Target => _target;
+        public NavMeshAgent Agent => _agent;
+        public Transform Target
+        {
+            get => _target;
+            protected set => _target = value;
+        } 
+        public bool IsFindTarget
+        {
+            get => _isFindTarget;
+            protected set => _isFindTarget = value;
+        }
         public float ViewRadius => Stats?.ViewDistance ?? 10f;
+
+        protected override void LoadComponents()
+        {
+            base.LoadComponents();
+            this.LoadComponent(ref _agent);
+        }
 
         protected virtual void Start()
         {
@@ -23,11 +42,13 @@ namespace Game.Entities
 
         protected virtual void FixedUpdate()
         {
-
+            Animation.Flip(Agent.velocity.x);
         }
 
         public virtual void FindTarget()
         {
+            if (!IsFindTarget) return;
+
             Collider2D collider = Physics2D.OverlapCircle(transform.position, ViewRadius, _targetLayer);
             if(collider != null)
             {

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game.Objects
 {
-    public class BatSoundWaveManager : SpawnedManager
+    public class BatSoundWaveManager : SpawnedObjectManager
     {
         [SerializeField] private float _startSize = 0.5f;
         [SerializeField] private float _biggestSize = 1f;

@@ -1,52 +1,88 @@
 using Game.Objects;
-using Game.Players;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Entities
 {
-    public class BatEnemy : Enemy, IAttackable
+    public class BatEnemy : Enemy, IHasSpawnPoint, IAttackable
     {
-
-        private float _attackCoolDown = 0f;
+        [SerializeField] private Vector2 _spawnPoint = Vector2.zero;
+        [SerializeField] private float _attackCoolDown = 0f;
+        [SerializeField] private float _patience = 5f;
 
         protected new BatAnimation Animation => base.Animation as BatAnimation;
         public new BatMovement Movement => base.Movement as BatMovement;
 
-
         public float AttackSpeed => Stats?.AttackSpeed.Value ?? float.PositiveInfinity;
-
+        public float AttackRange => Stats?.AttackRange ?? 0f;
         public bool IsAttack => false;
 
         public bool CanAttack => _attackCoolDown <= 0f;
+
+
+
+        public Vector2 SpawnPoint 
+        { 
+            get => _spawnPoint; 
+            set => _spawnPoint = value; 
+        }
+
+
+        protected override void Start()
+        {
+            base.Start();
+            Agent.stoppingDistance = AttackRange * 4/5;
+            Agent.speed = Stats.AirSpeed;
+        }
 
         protected override void FixedUpdate()
         {
             base.FixedUpdate();
             this.AttackHandle();
-            this.Behaviour();
+            this.Behavior();
         }
 
-        protected virtual void Behaviour()
+        protected virtual void Behavior()
         {
+            Vector2 distanceFromSpawn = (Vector2)transform.position - _spawnPoint;
+
+            // Too far spawn point
+            if (distanceFromSpawn.magnitude > ViewRadius * 2.5f)
+            {
+                Agent.SetDestination(SpawnPoint);
+                Agent.stoppingDistance = 0.1f;
+                _patience = 0;
+                Target = null;
+                IsFindTarget = false;
+                return;
+            }
+
+            // Inside spawn point
+            if (distanceFromSpawn.magnitude < ViewRadius / 5f)
+            {
+                IsFindTarget = true;
+            }
+
             if (Target != null)
             {
-                Vector2 dir = Target.transform.position - transform.position;
+                _patience = 5f;
+                Agent.stoppingDistance = AttackRange * 4 / 5;
+                Agent.SetDestination(Target.transform.position);
 
-                if (dir.magnitude > 4f)
+                Vector2 dir = Target.position - transform.position;
+                if (dir.magnitude <= AttackRange)
                 {
-                    Movement.Fly(dir);
-                }
-                else
-                {
-                    Movement.Stop();
                     (this as IAttackable).Attack(Target);
                 }
             }
             else
             {
-                Movement.Stop();
+                _patience -= Time.fixedDeltaTime;
+                if(_patience < 0)
+                {
+                    Agent.SetDestination(SpawnPoint);
+                    Agent.stoppingDistance = 0.1f;
+                    _patience = 0;
+                }
             }
         }
 
@@ -66,7 +102,7 @@ namespace Game.Entities
                 if (soundWave != null)
                 {
                     Vector2 dir = victim.transform.position - transform.position;
-                    soundWave.transform.position = (Vector2)transform.position + dir.normalized;
+                    soundWave.transform.position = (Vector2)transform.position + dir.normalized * 0.2f;
                     soundWave.AddForce(dir);
                 }
 

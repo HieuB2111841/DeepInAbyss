@@ -23,6 +23,7 @@ namespace Game.Entities
 
         [Header("Utilities")]
         [SerializeField] protected float _viewDistance = 10f;
+        [SerializeField] protected float _attackRange = 5f;
 
         [Header("Stats")]
         [SerializeField] protected SlideStat _health = new();
@@ -49,6 +50,7 @@ namespace Game.Entities
         public float ClimbSpeed => _climbSpeed;
 
         public float ViewDistance => _viewDistance;
+        public float AttackRange => _attackRange;
 
         public SlideStat Health => _health;
         public Stat Shield => _shield;
@@ -81,6 +83,7 @@ namespace Game.Entities
             _climbSpeed = _baseStats.ClimbSpeed;
 
             _viewDistance = _baseStats.ViewDistance;
+            _attackRange = _baseStats.AttackRange;
 
             Health.Add(Owner.transform, reason, _baseStats.Health);
             Damage.Add(Owner.transform, reason, _baseStats.Damage);

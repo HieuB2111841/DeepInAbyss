@@ -11,7 +11,7 @@ namespace Game.Objects
 
         [SerializeField] private SO_SpawnedManagerList _spawnedList;
 
-        private Dictionary<string, SpawnedManager> _managers = new();
+        private Dictionary<string, SpawnedObjectManager> _managers = new();
 
         private void Awake()
         {
@@ -24,21 +24,21 @@ namespace Game.Objects
             this.LoadSpawnedObjects();
         }
 
-        public SpawnedManager GetManager(string name)
+        public SpawnedObjectManager GetManager(string name)
         {
-            if (TryGetManager(name, out SpawnedManager manager))
+            if (TryGetManager(name, out SpawnedObjectManager manager))
             {
                 return manager;
             }
             return null;
         }
 
-        public bool TryGetManager(string name, out SpawnedManager manager)
+        public bool TryGetManager(string name, out SpawnedObjectManager manager)
         {
             return _managers.TryGetValue(name, out manager);
         }
 
-        public bool AddManager(SpawnedManager manager)
+        public bool AddManager(SpawnedObjectManager manager)
         {
             if(ContainsManager(manager.name))
                 return false;
@@ -55,7 +55,7 @@ namespace Game.Objects
 
         public SpawnedObject Spawn(string name, Transform owner, Vector2 position = default, Quaternion rotation = default)
         {
-            if(TryGetManager(name, out SpawnedManager manager))
+            if(TryGetManager(name, out SpawnedObjectManager manager))
             {
                 SpawnedObject getObject = manager.Pool.Activate();
                 getObject.Manager = manager;
@@ -69,7 +69,7 @@ namespace Game.Objects
 
         public bool Despawn(SpawnedObject targetObject, string name)
         {
-            if (TryGetManager(name, out SpawnedManager manager))
+            if (TryGetManager(name, out SpawnedObjectManager manager))
             {
                 bool isDespawnComplete = manager.Pool.Deactivate(targetObject);
                 return isDespawnComplete;
@@ -84,9 +84,9 @@ namespace Game.Objects
 
             _managers.Clear();
 
-            foreach (SpawnedManager spawnedManager in _spawnedList.Managers)
+            foreach (SpawnedObjectManager spawnedManager in _spawnedList.Managers)
             {
-                SpawnedManager manager = Instantiate(spawnedManager, this.transform);
+                SpawnedObjectManager manager = Instantiate(spawnedManager, this.transform);
                 manager.name = spawnedManager.name;
                 this.AddManager(manager);
             }
