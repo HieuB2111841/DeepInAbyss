@@ -1,20 +1,11 @@
-using Managers.Extension;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
 namespace Game.Entities
 {
-    [RequireComponent(typeof(Animator), typeof(SpriteRenderer))]
-    public class CharacterAnimation : MonoBehaviour, ICharacterComponent
+    public class CharacterAnimation : EntityAnimation, ICharacterComponent
     {
-        private Character _character;
-
-        private SpriteRenderer _sprite;
-        private Animator _animator;
-
-        public Character Character => _character;
+        public Character Character => Entity as Character;
 
         private int _horizontalSpeedHashCode;
         private int _verticalSpeedHashCode;
@@ -22,10 +13,6 @@ namespace Game.Entities
         private int _isClimbHashCode;
         private int _isClimIdlebHashCode;
 
-        protected virtual void Awake()
-        {
-            this.LoadComponents();
-        }
 
         private void Start()
         {
@@ -35,14 +22,6 @@ namespace Game.Entities
             _isClimbHashCode = Animator.StringToHash("IsClimb");
             _isClimIdlebHashCode = Animator.StringToHash("IsClimbIdle");
 
-        }
-
-        protected virtual void LoadComponents()
-        {
-            this.LoadComponent(ref _character);
-
-            this.LoadComponent(ref _sprite);
-            this.LoadComponent(ref _animator);
         }
 
         public void SetSpeed(Vector2 direction)
@@ -79,18 +58,6 @@ namespace Game.Entities
         public void SetIsClimbIdle(bool state)
         {
             _animator.SetBool(_isClimIdlebHashCode, state);
-        }
-
-        public void Flip(float axis)
-        {
-            if (axis > 0.02f)
-            {
-                _sprite.flipX = false;
-            }
-            if (axis < -0.02f)
-            {
-                _sprite.flipX = true;
-            }
         }
     }
 }

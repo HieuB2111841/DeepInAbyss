@@ -6,7 +6,22 @@ namespace Game.Objects
 {
     public abstract class SpawnedObject : MonoBehaviour
     {
+        [SerializeField] private SpawnedManager _manager;
+        [SerializeField] private Transform _owner;
         [SerializeField] private float _remainingTimeToDespawn = 10f;
+
+
+        public SpawnedManager Manager
+        {
+            get => _manager;
+            set => _manager = value;
+        }
+
+        public Transform Owner
+        {
+            get => _owner;
+            set => _owner = value;
+        }
 
         public float RemainingTime
         {

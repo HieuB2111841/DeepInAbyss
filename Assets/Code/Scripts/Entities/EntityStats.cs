@@ -29,6 +29,7 @@ namespace Game.Entities
         [SerializeField] protected Stat _shield = new();
         
         [SerializeField] protected Stat _damage = new();
+        [SerializeField] protected Stat _attackSpeed = new();
         [SerializeField] protected Stat _armor = new();
 
 
@@ -52,6 +53,7 @@ namespace Game.Entities
         public SlideStat Health => _health;
         public Stat Shield => _shield;
         public Stat Damage => _damage;
+        public Stat AttackSpeed => _attackSpeed;
         public Stat Armor => _armor;
         #endregion
 
@@ -82,6 +84,7 @@ namespace Game.Entities
 
             Health.Add(Owner.transform, reason, _baseStats.Health);
             Damage.Add(Owner.transform, reason, _baseStats.Damage);
+            AttackSpeed.Add(Owner.transform, reason, _baseStats.AttackSpeed);
             Armor.Add(Owner.transform, reason, _baseStats.Armor);
         }
 

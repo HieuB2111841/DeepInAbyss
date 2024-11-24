@@ -16,10 +16,14 @@ namespace Game.Entities
         public Transform Target => _target;
         public float ViewRadius => Stats?.ViewDistance ?? 10f;
 
-
         protected virtual void Start()
         {
             InvokeRepeating(nameof(FindTarget), 1f, _findRate);
+        }
+
+        protected virtual void FixedUpdate()
+        {
+
         }
 
         public virtual void FindTarget()

@@ -6,8 +6,7 @@ namespace Game.Entities
 {
     public class CharacterMovement : EntityMovement, ICharacterComponent, IWalkable, IJumpable, ICrouchable, IClimbable
     {
-        private Character _character;
-        public Character Character => _character;
+        public Character Character => Entity as Character;
 
 
         protected float _currentSpeed;
@@ -101,12 +100,6 @@ namespace Game.Entities
 
         #endregion
 
-
-        protected override void LoadComponents()
-        {
-            base.LoadComponents();
-            this.LoadComponent(ref _character);
-        }
 
         protected override void Start()
         {

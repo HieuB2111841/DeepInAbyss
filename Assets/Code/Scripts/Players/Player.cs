@@ -109,7 +109,7 @@ namespace Game.Players
             if (PlayerInput.GetMouseButtonDown(MouseButton.Left))
             {
                 Vector2 mousePosition = PlayerInput.MousePosition;
-                FireBall fireBall = SpawnedObjectSystem.Instance.Spawn("FireBall") as FireBall;
+                FireBall fireBall = SpawnedObjectSystem.Instance.Spawn("FireBall", Character.transform) as FireBall;
                 if (fireBall != null)
                 {
                     Vector2 dir = mousePosition - (Vector2)Character.transform.position;

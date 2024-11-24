@@ -53,11 +53,13 @@ namespace Game.Objects
         }
 
 
-        public SpawnedObject Spawn(string name, Vector2 position = default, Quaternion rotation = default)
+        public SpawnedObject Spawn(string name, Transform owner, Vector2 position = default, Quaternion rotation = default)
         {
             if(TryGetManager(name, out SpawnedManager manager))
             {
                 SpawnedObject getObject = manager.Pool.Activate();
+                getObject.Manager = manager;
+                getObject.Owner = owner;
                 getObject.transform.SetPositionAndRotation(position, rotation);
 
                 return getObject;

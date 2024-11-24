@@ -23,6 +23,8 @@ namespace Game.Entities
             Vector2 speedVector = axis.normalized * FlySpeed;
             AddForce(speedVector);
             ClampVelocity(Mathf.Abs(speedVector.x), Mathf.Abs(speedVector.y));
+
+            Entity.Animation.Flip(axis.x);
         }
 
         public override void Move(Vector2 axis)

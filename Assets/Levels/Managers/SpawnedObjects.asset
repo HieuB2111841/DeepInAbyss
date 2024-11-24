@@ -15,3 +15,4 @@ MonoBehaviour:
   _managers:
   - {fileID: 7455840538837753814, guid: 324d731cfa5663b4eae2b4f3e7a514f4, type: 3}
   - {fileID: 150338709058309776, guid: 0aec48ea081263140aa95d50b83126b4, type: 3}
+  - {fileID: 5309371027723796718, guid: 45ec47d4029760b43a2ecae3e2c97b23, type: 3}

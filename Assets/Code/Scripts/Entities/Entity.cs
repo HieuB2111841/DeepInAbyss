@@ -12,6 +12,7 @@ namespace Game.Entities
 
         [SerializeField] private Collider2D _bodyCollider;
 
+        protected EntityAnimation _animation;
         protected EntityMovement _movement;
         protected EntityStats _stats;
 
@@ -19,6 +20,7 @@ namespace Game.Entities
         #region Properties
         public Rigidbody2D Rigidbody2D => _rigidbody2D;
         public Collider2D BodyCollider => _bodyCollider;
+        public EntityAnimation Animation => _animation;
         public EntityMovement Movement => _movement;
         public EntityStats Stats => _stats;
 
@@ -28,6 +30,8 @@ namespace Game.Entities
         {
             base.LoadComponents();
             this.LoadComponent(ref _rigidbody2D);
+            this.LoadComponent(ref _bodyCollider);
+            this.LoadComponent(ref _animation);
             this.LoadComponent(ref _movement);
             this.LoadComponent(ref _stats);
 

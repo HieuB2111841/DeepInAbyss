@@ -44,7 +44,7 @@ namespace Game.Objects
         {
             if(CollideLayer.IsLayerInMask(collision.gameObject.layer))
             {
-                SpawnedObjectSystem.Instance.Spawn("FireBallExplosion", this.transform.position);
+                SpawnedObjectSystem.Instance.Spawn("FireBallExplosion", this.Owner, this.transform.position);
                 SpawnedObjectSystem.Instance.Despawn(this, "FireBall");
             }
         }

@@ -7,18 +7,14 @@ namespace Game.Entities
     public class Character : Entity
     {
         [SerializeField] private Collider2D _headCollider;
-        private CharacterAnimation _animation;
         private CharacterItem _item;
 
 
         public Collider2D HeadCollider => _headCollider;
-        public CharacterAnimation Animation => _animation;
+        public new CharacterAnimation Animation => base.Animation as CharacterAnimation;
+        public new CharacterMovement Movement => base.Movement as CharacterMovement;
         public CharacterItem Item => _item;
-
-        public new CharacterMovement Movement
-        {
-            get => (CharacterMovement)base.Movement;
-        }
+        
 
         protected override void LoadComponents()
         {
