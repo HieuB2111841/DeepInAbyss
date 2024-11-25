@@ -15,6 +15,7 @@ namespace Game.Objects
 
         [SerializeField] LayerMask _collideLayer;
         [SerializeField] float _damageScale = 1f;
+        public List<Transform> _collidedList = new();
 
         public Collider2D Collider => _collider;
         public Rigidbody2D Rigidbody2D => _rigidbody;
@@ -29,7 +30,13 @@ namespace Game.Objects
             this.LoadComponent(ref _rigidbody);
             this.LoadComponent(ref _sprite);
         }
-        
+
+        private void OnEnable()
+        {
+            Rigidbody2D.gravityScale = 0f;
+            _collidedList.Clear();
+        }
+
         private void FixedUpdate()
         {
             Vector2 offset = Vector2.down * 0.2f;
@@ -46,7 +53,10 @@ namespace Game.Objects
 
         public void OnCollision(Collider2D collision)
         {
+            if (_collidedList.Contains(collision.transform)) return;
+            else _collidedList.Add(collision.transform);
             if (collision.transform == Owner) return;
+
             if (CollideLayer.IsLayerInMask(collision.gameObject.layer))
             {
                 if (Owner.TryGetComponent(out Entity owner))

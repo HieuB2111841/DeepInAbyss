@@ -3,6 +3,7 @@ using Managers.Extension;
 using Game.Entities.Stats;
 using static UnityEngine.EventSystems.EventTrigger;
 using System;
+using Game.Objects;
 
 namespace Game.Entities
 {
@@ -108,7 +109,6 @@ namespace Game.Entities
         public void TakeDamage(Agent sender)
         {
             BeforeTakeDamage?.Invoke(sender);
-            Debug.Log($"before => {sender}");
 
             float damage = sender.Value - (10f / (10f + Armor.Value));
             float finalDamage = damage - Shield.Value;
@@ -129,6 +129,12 @@ namespace Game.Entities
                 // Reduct shield value by damage amount
                 Shield.Add(shieldBreaker);
                 sender.Set(value: 0f, duration: 0f);
+            }
+
+            TextPopup textPopup = SpawnedObjectSystem.Instance.Spawn("TextPopup", Owner.transform, Owner.transform.position) as TextPopup;
+            if(textPopup != null)
+            {
+                textPopup.SetUp((sender.Value).ToString("###.#"));
             }
 
             // Reduct remaining health
