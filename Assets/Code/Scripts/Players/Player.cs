@@ -51,12 +51,13 @@ namespace Game.Players
         private void Update()
         {
             this.ControlCamera();
+            this.ControlCharacter();
             this.TestStats();
         }
 
         private void FixedUpdate()
         {
-            this.ControlCharacter();
+            this.FixedControlCharacter();
             this.HandleUI();
         }
 
@@ -75,13 +76,22 @@ namespace Game.Players
 
         private void ControlCharacter()
         {
-            Vector2 moveAxis = PlayerInput.KeyAxis;
-            Character.Movement.Move(moveAxis);
-
             if (PlayerInput.GetJumpKey())
             {
                 Character.Movement.Jump();
             }
+
+            if (PlayerInput.GetMouseButtonDown(MouseButton.Left))
+            {
+                Vector2 dir = PlayerInput.MousePosition - (Vector2)Character.transform.position;
+                Character.Attack(dir);
+            }
+        }
+
+        private void FixedControlCharacter()
+        {
+            Vector2 moveAxis = PlayerInput.KeyAxis;
+            Character.Movement.Move(moveAxis);
         }
 
         private void InitUI()
@@ -104,18 +114,6 @@ namespace Game.Players
             if (PlayerInput.GetKeyDown(KeyCode.Q))
             {
                 Character.Stats.SendDamage(Character, 1f);
-            }
-
-            if (PlayerInput.GetMouseButtonDown(MouseButton.Left))
-            {
-                Vector2 mousePosition = PlayerInput.MousePosition;
-                FireBall fireBall = SpawnedObjectSystem.Instance.Spawn("FireBall", Character.transform) as FireBall;
-                if (fireBall != null)
-                {
-                    Vector2 dir = mousePosition - (Vector2)Character.transform.position;
-                    fireBall.transform.position = (Vector2)Character.transform.position + dir.normalized;
-                    fireBall.AddForce(dir.normalized * 10f);
-                }
             }
 
             if (PlayerInput.GetKeyDown(KeyCode.R))

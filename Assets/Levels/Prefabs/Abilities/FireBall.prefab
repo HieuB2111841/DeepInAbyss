@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 5155944384637460390}
   - component: {fileID: 7525469322516925719}
   - component: {fileID: 6547640113046668385}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: FireBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -153,6 +153,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82401de36c86d8c4d865f75c589b2d2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _manager: {fileID: 0}
+  _owner: {fileID: 0}
+  _remainingTimeToDespawn: 10
   _collideLayer:
     serializedVersion: 2
     m_Bits: 64

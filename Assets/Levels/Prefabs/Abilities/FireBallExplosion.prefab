@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 643128832066623731}
   - component: {fileID: 7759400320130173737}
   - component: {fileID: 7416170222177124562}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: FireBallExplosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,6 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f8da11df441696488a00981780aa157, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _manager: {fileID: 0}
+  _owner: {fileID: 0}
   _remainingTimeToDespawn: 10
 --- !u!58 &7416170222177124562
 CircleCollider2D:

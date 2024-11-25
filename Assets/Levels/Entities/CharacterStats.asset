@@ -18,6 +18,9 @@ MonoBehaviour:
   _airSpeed: 2
   _crouchSpeed: 1
   _climbSpeed: 1
+  _viewDistance: 10
+  _attackRange: 5
   _health: 100
   _damage: 10
+  _attackSpeed: 0.25
   _armor: 0

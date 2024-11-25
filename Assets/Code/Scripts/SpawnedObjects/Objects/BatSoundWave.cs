@@ -2,13 +2,12 @@ using Game.Entities;
 using Managers.Extension;
 using Managers.Utils;
 using System.Collections.Generic;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 namespace Game.Objects
 {
 
-    public class BatSoundWave : SpawnedObject, ILaunchableObject, ICollidable
+    public class BatSoundWave : SpawnedObject, ISendDamageObject, ILaunchableObject, ICollidableObject
     {
         private CircleCollider2D _collider;
         private Rigidbody2D _rigidbody;
@@ -22,7 +21,8 @@ namespace Game.Objects
         public Rigidbody2D Rigidbody2D => _rigidbody;
 
         public LayerMask CollideLayer => _collideLayer;
-        
+
+        public float DamageScale => RemainingTime / Manager.TimeToDespawn;
 
         protected override void LoadComponents()
         {
@@ -63,8 +63,7 @@ namespace Game.Objects
             {
                 if(Owner.TryGetComponent(out Entity owner))
                 {
-                    float damageScale = RemainingTime / Manager.TimeToDespawn;
-                    owner.Stats.SendDamage(collision.transform, damageScale);
+                    owner.Stats.SendDamage(collision.transform, DamageScale);
                 }
             }
         }

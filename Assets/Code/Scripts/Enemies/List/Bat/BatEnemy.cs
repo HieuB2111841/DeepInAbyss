@@ -71,7 +71,7 @@ namespace Game.Entities
                 Vector2 dir = Target.position - transform.position;
                 if (dir.magnitude <= AttackRange)
                 {
-                    (this as IAttackable).Attack(Target);
+                    (this as IAttackable).Attack(dir);
                 }
             }
             else
@@ -94,16 +94,15 @@ namespace Game.Entities
             }
         }
 
-        public void Attack(Entity victim)
+        public void Attack(Vector2 direction)
         {
             if (CanAttack)
             {
                 BatSoundWave soundWave = SpawnedObjectSystem.Instance.Spawn("BatSoundWave", transform) as BatSoundWave;
                 if (soundWave != null)
                 {
-                    Vector2 dir = victim.transform.position - transform.position;
-                    soundWave.transform.position = (Vector2)transform.position + dir.normalized * 0.2f;
-                    soundWave.AddForce(dir);
+                    soundWave.transform.position = (Vector2)transform.position + direction.normalized * 0.2f;
+                    soundWave.AddForce(direction);
                 }
 
                 _attackCoolDown = AttackSpeed; // Reset attack

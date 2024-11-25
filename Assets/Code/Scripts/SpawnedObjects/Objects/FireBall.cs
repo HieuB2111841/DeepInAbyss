@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Game.Objects
 {
-    internal class FireBall : SpawnedObject, ILaunchableObject, ICollidable
+    internal class FireBall : SpawnedObject, ILaunchableObject, ICollidableObject
     {
         private CircleCollider2D _collider;
         private Rigidbody2D _rigidbody;
