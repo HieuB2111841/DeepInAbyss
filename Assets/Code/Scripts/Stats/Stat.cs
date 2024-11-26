@@ -32,6 +32,11 @@ namespace Game.Entities.Stats
             _value = 0;
         }
 
+        public virtual float ValueRatio(float ratio)
+        {
+            return Value * ratio;
+        }
+
         public virtual void Add(Agent agent)
         {
             _agents.Add(agent);

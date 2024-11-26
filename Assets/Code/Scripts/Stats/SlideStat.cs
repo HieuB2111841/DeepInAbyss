@@ -23,10 +23,19 @@ namespace Game.Entities.Stats
             }
         }
 
+        public virtual bool IsFull => RemainingValue >= Value;
+        public virtual bool IsEmpty => RemainingValue <= 0f;
+
+
         public override void Reset()
         {
             base.Reset();
             _remainingValue = 0f;
+        }
+
+        public virtual float RemainingRatio(float ratio)
+        {
+            return RemainingValue * ratio;
         }
 
         public virtual void AddToRemaining(Agent agent)

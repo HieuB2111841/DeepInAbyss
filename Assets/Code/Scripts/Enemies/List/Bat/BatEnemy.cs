@@ -9,6 +9,9 @@ namespace Game.Entities
         [SerializeField] private float _attackCoolDown = 0f;
         [SerializeField] private float _patience = 5f;
 
+        private bool _isGoBack = false;
+        private float _healCooldown = 0.15f;
+
         protected new BatAnimation Animation => base.Animation as BatAnimation;
         public new BatMovement Movement => base.Movement as BatMovement;
 
@@ -33,7 +36,6 @@ namespace Game.Entities
             Agent.stoppingDistance = AttackRange * 4/5;
             Agent.speed = Stats.AirSpeed;
             Stats.OnDeath += Stats_OnDeath;
-
         }
 
         private void Stats_OnDeath(Stats.Agent obj)
@@ -43,6 +45,15 @@ namespace Game.Entities
             {
                 deathVFX.Init(transform.localScale.x * 2f);
             }
+
+            Cherry cherry = SpawnedObjectSystem.Instance.Spawn<Cherry>("Cherry", transform, transform.position);
+            if (cherry != null)
+            {
+                float randomX = Random.Range(-1f, 1f);
+                float randomY = Random.Range(-1f, 1f);
+                cherry.AddForce(new Vector2(randomX, randomY).normalized);
+            }
+
             SpawnManager.Despawn(this);
         }
 
@@ -50,35 +61,33 @@ namespace Game.Entities
         {
             base.FixedUpdate();
             this.AttackHandle();
+            this.GoBackHandle();
             this.Behavior();
         }
 
+        public float distanceFromSpawn;
         protected virtual void Behavior()
         {
-            Vector2 distanceFromSpawn = (Vector2)transform.position - _spawnPoint;
+            distanceFromSpawn = ((Vector2)transform.position - _spawnPoint).magnitude;
 
             // Too far spawn point
-            if (distanceFromSpawn.magnitude > ViewRadius * 2.5f)
+            if (distanceFromSpawn > ViewRadius * 2.5f)
             {
-                Agent.SetDestination(SpawnPoint);
-                Agent.stoppingDistance = 0.1f;
-                _patience = 0;
-                Target = null;
-                IsFindTarget = false;
+                _isGoBack = true;
                 return;
             }
 
             // Inside spawn point
-            if (distanceFromSpawn.magnitude < ViewRadius / 5f)
+            if (distanceFromSpawn < ViewRadius / 5f)
             {
-                IsFindTarget = true;
+                _isGoBack = false;
             }
 
             if (Target != null)
             {
+                Agent.SetDestination(Target.transform.position);
                 _patience = 5f;
                 Agent.stoppingDistance = AttackRange * 4 / 5;
-                Agent.SetDestination(Target.transform.position);
 
                 Vector2 dir = Target.position - transform.position;
                 if (dir.magnitude <= AttackRange)
@@ -88,14 +97,16 @@ namespace Game.Entities
             }
             else
             {
-                _patience -= Time.fixedDeltaTime;
-                if(_patience < 0)
+                if (distanceFromSpawn > ViewRadius / 5f)
                 {
-                    Agent.SetDestination(SpawnPoint);
-                    Agent.stoppingDistance = 0.1f;
-                    _patience = 0;
+                    _patience -= Time.fixedDeltaTime;
+                    if (_patience < 0)
+                    {
+                        _isGoBack = true;
+                    }
                 }
             }
+
         }
 
         protected virtual void AttackHandle()
@@ -103,6 +114,33 @@ namespace Game.Entities
             if(_attackCoolDown > 0f )
             {
                 _attackCoolDown -= Time.fixedDeltaTime;
+            }
+        }
+
+        protected virtual void GoBackHandle()
+        {
+            if(_isGoBack )
+            {
+                Agent.SetDestination(SpawnPoint);
+                Agent.stoppingDistance = 0.1f;
+                _patience = 0;
+                Target = null;
+                IsFindTarget = false;
+
+                if(!Stats.Health.IsFull)
+                {
+                    _healCooldown -= Time.fixedDeltaTime;
+                    if (_healCooldown <= 0f)
+                    {
+                        Stats.Heal(transform, "Go back spawn point", Stats.Health.Value / 10f);
+                        _healCooldown =  0.15f;
+                    }
+                }
+            }
+            else
+            {
+                _healCooldown = 0.15f;
+                IsFindTarget = true;
             }
         }
 

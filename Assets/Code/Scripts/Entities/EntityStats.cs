@@ -39,6 +39,8 @@ namespace Game.Entities
         public event Action<Agent> AfterTakeDamage;
         public event Action<Agent> OnDeath;
 
+        public event Action<Agent> BeforeHeal;
+        public event Action<Agent> AfterHeal;
 
         #region Properties
         public Entity Owner => _owner;
@@ -158,6 +160,27 @@ namespace Game.Entities
             {
                 OnDeath?.Invoke(sender);
             }
+        }
+
+
+        public virtual void Heal(Transform author, string reason, float value)
+        {
+            Agent sender = new Agent(author, reason, value);
+            this.Heal(sender);
+        }
+
+        public virtual void Heal(Agent sender)
+        {
+            BeforeHeal?.Invoke(sender);
+
+            TextPopup textPopup = SpawnedObjectSystem.Instance.Spawn("TextPopup", Owner.transform, Owner.transform.position) as TextPopup;
+            if (textPopup != null)
+            {
+                textPopup.SetUp((sender.Value).ToString("+###.#"), Color.green);
+            }
+
+            Health.AddToRemaining(sender);
+            AfterHeal?.Invoke(sender);
         }
     }
 }
