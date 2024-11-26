@@ -39,11 +39,11 @@ namespace Game.Objects
 
         private void FixedUpdate()
         {
-            Vector2 offset = Vector2.down * 0.2f;
-            if (_sprite.flipX) offset += Vector2.left * 1f;
-            else offset += Vector2.right * 1f;
+            Vector2 offset;
+            if (_sprite.flipX) offset = -transform.right * 0.2f;
+            else offset = transform.right * 0.2f;
 
-            transform.position = (Vector2)Owner.transform.position + offset;
+            transform.position = (Vector2)Owner.transform.position + (Vector2)transform.right * 0.8f;
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
@@ -68,7 +68,7 @@ namespace Game.Objects
 
         public void SetDirection(Vector2 dir)
         {
-            _sprite.flipX = dir.x < 0;
+            transform.right = dir;
         }
     }
 }

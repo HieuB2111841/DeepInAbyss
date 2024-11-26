@@ -26,6 +26,12 @@ namespace Game.Entities.Stats
             }
         }
 
+        public virtual void Reset()
+        {
+            _agents.Clear();
+            _value = 0;
+        }
+
         public virtual void Add(Agent agent)
         {
             _agents.Add(agent);

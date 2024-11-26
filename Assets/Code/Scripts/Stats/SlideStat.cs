@@ -23,6 +23,12 @@ namespace Game.Entities.Stats
             }
         }
 
+        public override void Reset()
+        {
+            base.Reset();
+            _remainingValue = 0f;
+        }
+
         public virtual void AddToRemaining(Agent agent)
         {
             RemainingValue += agent.Value;

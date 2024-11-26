@@ -20,7 +20,7 @@ MonoBehaviour:
   _climbSpeed: 0
   _viewDistance: 10
   _attackRange: 4
-  _health: 100
+  _health: 30
   _damage: 10
   _attackSpeed: 2
   _armor: 10

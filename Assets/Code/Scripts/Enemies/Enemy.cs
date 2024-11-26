@@ -1,3 +1,4 @@
+using Game.Objects;
 using Game.Players;
 using Managers.Extension;
 using System.Collections;
@@ -10,6 +11,9 @@ namespace Game.Entities
     public class Enemy : Entity
     {
         [SerializeField] protected NavMeshAgent _agent;
+        [SerializeField] protected SpawnedEntityManager _spawnManager;
+
+        [Header("Target Founder")]
         [SerializeField] protected Transform _target;
         [SerializeField] protected LayerMask _targetLayer;
         [SerializeField] protected LayerMask _obstacleLayer;
@@ -17,6 +21,12 @@ namespace Game.Entities
         [SerializeField, Min(0.1f)] protected float _findRate = 1f;
 
         public NavMeshAgent Agent => _agent;
+        public SpawnedEntityManager SpawnManager
+        {
+            get => _spawnManager;
+            set => _spawnManager = value;
+        }
+
         public Transform Target
         {
             get => _target;

@@ -32,6 +32,18 @@ namespace Game.Entities
             base.Start();
             Agent.stoppingDistance = AttackRange * 4/5;
             Agent.speed = Stats.AirSpeed;
+            Stats.OnDeath += Stats_OnDeath;
+
+        }
+
+        private void Stats_OnDeath(Stats.Agent obj)
+        {
+            EntityDeath deathVFX = SpawnedObjectSystem.Instance.Spawn<EntityDeath>("EntityDeath", transform, transform.position);
+            if(deathVFX != null)
+            {
+                deathVFX.Init(transform.localScale.x * 2f);
+            }
+            SpawnManager.Despawn(this);
         }
 
         protected override void FixedUpdate()
@@ -103,6 +115,7 @@ namespace Game.Entities
                 {
                     soundWave.transform.position = (Vector2)transform.position + direction.normalized * 0.2f;
                     soundWave.AddForce(direction);
+                    Animation.Flip(direction.x);
                 }
 
                 _attackCoolDown = AttackSpeed; // Reset attack

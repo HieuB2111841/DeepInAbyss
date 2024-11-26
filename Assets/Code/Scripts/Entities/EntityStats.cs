@@ -37,6 +37,7 @@ namespace Game.Entities
 
         public event Action<Agent> BeforeTakeDamage;
         public event Action<Agent> AfterTakeDamage;
+        public event Action<Agent> OnDeath;
 
 
         #region Properties
@@ -58,6 +59,8 @@ namespace Game.Entities
         public Stat Damage => _damage;
         public Stat AttackSpeed => _attackSpeed;
         public Stat Armor => _armor;
+
+        public bool IsDeath => Health?.RemainingValue <= 0f;
         #endregion
 
         private void Awake()
@@ -67,7 +70,7 @@ namespace Game.Entities
 
         private void Start()
         {
-            this.LoadBaseStats();
+            this.ResetStats();
         }
 
         protected void LoadBaseStats()
@@ -90,6 +93,16 @@ namespace Game.Entities
             Damage.Add(Owner.transform, reason, _baseStats.Damage);
             AttackSpeed.Add(Owner.transform, reason, _baseStats.AttackSpeed);
             Armor.Add(Owner.transform, reason, _baseStats.Armor);
+        }
+
+        public void ResetStats()
+        {
+            Health.Reset();
+            Damage.Reset();
+            AttackSpeed.Reset();
+            Armor.Reset();
+
+            this.LoadBaseStats();
         }
 
         public void SendDamage(Entity victim, float damageScale = 1f)
@@ -140,6 +153,11 @@ namespace Game.Entities
             // Reduct remaining health
             Health.AddToRemaining(sender);
             AfterTakeDamage?.Invoke(sender);
+
+            if(IsDeath)
+            {
+                OnDeath?.Invoke(sender);
+            }
         }
     }
 }

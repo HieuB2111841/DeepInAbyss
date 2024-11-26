@@ -6,7 +6,7 @@ namespace Game.Entities
 {
     public class CharacterMovement : EntityMovement, ICharacterComponent, IWalkable, IJumpable, ICrouchable, IClimbable
     {
-        public Character Character => Entity as Character;
+        [SerializeField] protected bool _isLockMovement = false;
 
 
         protected float _currentSpeed;
@@ -22,6 +22,15 @@ namespace Game.Entities
         protected bool _canClimb = false;
 
         #region Properties
+
+        public Character Character => Entity as Character;
+        
+        public virtual bool IsLockMovement
+        {
+            get => _isLockMovement;
+            set => _isLockMovement = value;
+        }
+
         public virtual float Speed
         {
             get => _currentSpeed;
@@ -105,6 +114,7 @@ namespace Game.Entities
         {
             base.Start();
             _crouchContactFilter.SetLayerMask(_groundLayer);
+            Entity.Rigidbody2D.gravityScale = Entity.Stats.GravityScale;
         }
 
         protected override void FixedUpdate()
@@ -117,10 +127,12 @@ namespace Game.Entities
 
         public override void Move(Vector2 axis)
         {
-            Crouch(axis.y < 0);
+            if (this.IsLockMovement) return;
+
+            this.Crouch(axis.y < 0);
             if ((CanClimb && axis.y != 0) || IsClimb)
             {
-                Climb(axis);
+                this.Climb(axis);
             }
             else
             {
@@ -130,6 +142,8 @@ namespace Game.Entities
 
         public virtual void Jump()
         {
+            if (this.IsLockMovement) return;
+
             if (CanJump && CanUncrouch && (IsGrounded || IsClimb))
             {
                 this.SetVelocity(y: 0f);
@@ -148,6 +162,8 @@ namespace Game.Entities
 
         public virtual void Crouch(bool isCrouch)
         {
+            if (this.IsLockMovement) return;
+
             if (CanCrouch && CanUncrouch)
             {
                 IsCrouch = isCrouch;

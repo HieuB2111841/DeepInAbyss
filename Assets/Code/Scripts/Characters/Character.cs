@@ -1,6 +1,6 @@
 using Game.Objects;
 using Managers.Extension;
-using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 namespace Game.Entities
@@ -8,6 +8,7 @@ namespace Game.Entities
     public class Character : Entity, IAttackable
     {
         [SerializeField] private Collider2D _headCollider;
+        [SerializeField] private Transform _spawnPoint;
         private CharacterAbility _ability;
 
         [SerializeField] private float _attackCoolDown = 0f;
@@ -33,6 +34,16 @@ namespace Game.Entities
             this.LoadComponent(ref _ability);
 
             this.CheckComponent(_headCollider, isDebug: true);
+        }
+
+        protected virtual void Start()
+        {
+            Stats.OnDeath += Stats_OnDeath;
+        }
+
+        private void Stats_OnDeath(Stats.Agent obj)
+        {
+            StartCoroutine(Despawn());
         }
 
         protected virtual void FixedUpdate()
@@ -66,19 +77,40 @@ namespace Game.Entities
 
         public void Attack(Vector2 direction)
         {
+            if (Movement.IsLockMovement) return;
             if (CanAttack)
             {
                 Scratch scratch = SpawnedObjectSystem.Instance.Spawn("Scratch", transform) as Scratch;
                 if (scratch != null)
                 {
-                    Vector2 offset = Vector2.right * Mathf.Sign(direction.x) * 1f + Vector2.down * 0.2f;
-                    scratch.transform.position = (Vector2)transform.position + offset;
                     scratch.SetDirection(direction);
                     Animation.Flip(direction.x < 0);
                 }
 
                 _attackCoolDown = AttackSpeed; // Reset attack
             }
+        }
+
+        public virtual void Spawn()
+        {
+            Stats.ResetStats();
+            Movement.IsLockMovement = false;
+            if(_spawnPoint != null)
+            {
+                transform.position = _spawnPoint.position;
+            }
+            Rigidbody2D.gravityScale = Stats.GravityScale;
+            gameObject.SetActive(true);
+        }
+
+        protected virtual IEnumerator Despawn()
+        {
+            Movement.IsLockMovement = true;
+            Animation.Death();
+            Rigidbody2D.gravityScale = 0f;
+
+            yield return new WaitForSeconds(1f);
+            gameObject.SetActive(false);
         }
     }
 }

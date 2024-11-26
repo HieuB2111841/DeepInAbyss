@@ -52,7 +52,7 @@ namespace Game.Players
         {
             this.ControlCamera();
             this.ControlCharacter();
-            this.TestStats();
+            this.Test();
         }
 
         private void FixedUpdate()
@@ -108,7 +108,7 @@ namespace Game.Players
 
         }
 
-        private void TestStats()
+        private void Test()
         {
 
             if (PlayerInput.GetKeyDown(KeyCode.Q))
@@ -129,6 +129,14 @@ namespace Game.Players
             if (PlayerInput.GetKeyDown(KeyCode.Alpha2))
             {
                 Character.Stats.Armor.Add(transform, "buff armor", 10f);
+            }
+
+            if (PlayerInput.GetKeyDown(KeyCode.B))
+            {
+                if(Character.Stats.IsDeath)
+                {
+                    Character.Spawn();
+                }
             }
         }
     }

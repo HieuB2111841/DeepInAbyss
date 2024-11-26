@@ -46,10 +46,13 @@ namespace Game.Objects
         public virtual Entity Spawn(Vector2 position)
         {
             Entity getEntity = Pool.Activate();
-            if(getEntity.TryGetComponent(out NavMeshAgent agent))
+            if(getEntity is Enemy enemy)
             {
-                agent.Warp(position);
+                enemy.SpawnManager = this;
+                enemy.Stats.ResetStats();
+                enemy.Agent.Warp(position);
             }
+
             else getEntity.transform.position = position;
 
             if (getEntity is IHasSpawnPoint hasSpawnPoint)
@@ -58,6 +61,11 @@ namespace Game.Objects
             }
 
             return getEntity;
+        }
+
+        public virtual bool Despawn(Entity entity)
+        {
+            return Pool.Deactivate(entity);
         }
 
         protected virtual void LoadComponents()

@@ -67,6 +67,11 @@ namespace Game.Objects
             return null;
         }
 
+        public T Spawn<T>(string name, Transform owner, Vector2 position = default, Quaternion rotation = default) where T : SpawnedObject
+        {
+            return this.Spawn(name, owner, position, rotation) as T;
+        }
+
         public bool Despawn(SpawnedObject targetObject, string name)
         {
             if (TryGetManager(name, out SpawnedObjectManager manager))
