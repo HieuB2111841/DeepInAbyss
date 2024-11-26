@@ -1,0 +1,28 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Code/UI%20Toolkit/Uss/Game.uss?fileID=7433441132597879392&amp;guid=534e83febcf07a443a16a27711420fe5&amp;type=3#Game" />
+    <Style src="project://database/Assets/Code/UI%20Toolkit/Uss/Home.uss?fileID=7433441132597879392&amp;guid=85724083d840e0f449c83e0d50331128&amp;type=3#Home" />
+    <ui:VisualElement name="Container" class="container" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/Arts/Textures/UIs/DeepInAbyss.png?fileID=21300000&amp;guid=081600cb066afa3409a32cce3f24e360&amp;type=3#DeepInAbyss&apos;); align-items: center; justify-content: center; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">
+        <ui:VisualElement name="Main" style="top: 25%;">
+            <ui:VisualElement name="PlayButton" class="home-button" style="flex-grow: 1;">
+                <ui:Label tabindex="-1" text="Play" parse-escape-sequences="true" display-tooltip-when-elided="true" class="home-button-label" />
+            </ui:VisualElement>
+            <ui:VisualElement name="SettingsButton" class="home-button" style="flex-grow: 1;">
+                <ui:Label tabindex="-1" text="Settings" parse-escape-sequences="true" display-tooltip-when-elided="true" class="home-button-label" />
+            </ui:VisualElement>
+            <ui:VisualElement name="ExitButton" class="home-button" style="flex-grow: 1;">
+                <ui:Label tabindex="-1" text="Exit" parse-escape-sequences="true" display-tooltip-when-elided="true" class="home-button-label" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="ConfilmPanel" class="floating-panel ui-bar hide" style="width: 500px; height: 300px; align-items: center; flex-direction: column; align-self: center; top: 30%;">
+        <ui:Label tabindex="-1" text="Are you sure?" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ConfilmPanelHeader" style="width: auto; height: 60px; -unity-font: url(&apos;project://database/Library/unity%20default%20resources?fileID=10102&amp;guid=0000000000000000e000000000000000&amp;type=0#LegacyRuntime&apos;); font-size: 42px; -unity-text-align: middle-center; -unity-font-style: bold; color: rgb(255, 255, 255);" />
+        <ui:Label tabindex="-1" text="Do you want to exit?" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ConfilmPanelContent" style="flex-grow: 1; font-size: 30px; -unity-font-style: bold; -unity-text-align: middle-center; color: rgb(255, 255, 255);" />
+        <ui:VisualElement name="Buttons" style="height: 120px; width: 100%; flex-direction: row; justify-content: space-around; align-items: center;">
+            <ui:VisualElement name="ConfilmPanelNoButton" style="width: 100px; height: 100px; background-image: url(&apos;project://database/Assets/Arts/Textures/UIs/UIButtonIcon.png?fileID=2087662524&amp;guid=1db49b0b23e634a449b3c7a2d403a816&amp;type=3#UIButtonIcon_Cancel&apos;);" />
+            <ui:VisualElement name="ConfilmPanelYesButton" style="width: 100px; height: 100px; background-image: url(&apos;project://database/Assets/Arts/Textures/UIs/UIButtonIcon.png?fileID=-1997949289&amp;guid=1db49b0b23e634a449b3c7a2d403a816&amp;type=3#UIButtonIcon_Check&apos;);" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="LoadingPanel" class="floating-panel hide" style="flex-grow: 1; width: 100%; height: 100%; background-image: url(&apos;project://database/Assets/Docs/Packages/SunnyLand%20Artwork/Environment/back.png?fileID=21300000&amp;guid=8e160a2a620644cd6afef9119dad1093&amp;type=3#back&apos;);">
+        <ui:Label tabindex="-1" text="Loading..." parse-escape-sequences="true" display-tooltip-when-elided="true" style="font-size: 50px; -unity-font-style: italic; position: absolute; right: 5%; bottom: 5%;" />
+    </ui:VisualElement>
+</ui:UXML>

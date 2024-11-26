@@ -9,3 +9,31 @@
 .hide {
     display: none;
 }
+
+.ui-bar {
+    flex-grow: 1;
+    position: absolute;
+    left: auto;
+    top: auto;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    background-image: url('project://database/Assets/Arts/Textures/Wooden/WoodenTexture.png?fileID=2800000&guid=acfa364bfb12dfe4788f159cc473eada&type=3#WoodenTexture');
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    -unity-background-image-tint-color: rgb(202, 202, 202);
+}
+
+.button {
+    height: 50px;
+    width: 50px;
+}
+
+.floating-panel {
+    position: absolute;
+}

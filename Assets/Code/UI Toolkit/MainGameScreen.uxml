@@ -2,9 +2,14 @@
     <Style src="project://database/Assets/Code/UI%20Toolkit/Uss/Game.uss?fileID=7433441132597879392&amp;guid=534e83febcf07a443a16a27711420fe5&amp;type=3#Game" />
     <Style src="project://database/Assets/Resources/UIStyleSheets/UISlideStatStyle.uss?fileID=7433441132597879392&amp;guid=fece650bd44459747aebceaefc7fd10e&amp;type=3#UISlideStatStyle" />
     <Style src="project://database/Assets/Resources/UIStyleSheets/UIStatInfoStyle.uss?fileID=7433441132597879392&amp;guid=459d58dd8c9915644a5d2b42caf7ab1d&amp;type=3#UIStatInfoStyle" />
+    <Style src="project://database/Assets/Resources/UIStyleSheets/UIAbilityInfo.uss?fileID=7433441132597879392&amp;guid=ed3c530e118ed7b4b836a878680d3a13&amp;type=3#UIAbilityInfo" />
     <ui:VisualElement name="Container" class="container">
-        <ui:VisualElement name="Action" style="flex-grow: 1; position: absolute; right: 0; top: 0; width: 200px; height: 50px;" />
-        <ui:VisualElement name="Character" style="flex-grow: 1; position: absolute; width: 500px; height: 140px; left: 0; top: 0; align-items: flex-end; flex-direction: row; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px; background-image: url(&apos;project://database/Assets/Arts/Textures/Wooden/WoodenTexture.png?fileID=2800000&amp;guid=acfa364bfb12dfe4788f159cc473eada&amp;type=3#WoodenTexture&apos;); border-top-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-bottom-left-radius: 20px; -unity-background-image-tint-color: rgb(202, 202, 202);">
+        <ui:VisualElement name="Action" class="ui-bar" style="flex-grow: 1; position: absolute; right: 0; top: 0; width: 190px; height: 70px; flex-direction: row-reverse; justify-content: space-around; align-items: stretch;">
+            <ui:VisualElement name="Settings" class="button" style="background-image: url(&apos;project://database/Assets/Arts/Textures/UIs/UIButtonIcon.png?fileID=1367003221&amp;guid=1db49b0b23e634a449b3c7a2d403a816&amp;type=3#UIButtonIcon_Setting&apos;);" />
+            <ui:VisualElement name="Inventory" class="button" style="background-image: url(&apos;project://database/Assets/Arts/Textures/UIs/UIButtonIcon.png?fileID=1582271576&amp;guid=1db49b0b23e634a449b3c7a2d403a816&amp;type=3#UIButtonIcon_List&apos;);" />
+            <ui:VisualElement name="Shop" class="button" style="background-image: url(&apos;project://database/Assets/Arts/Textures/UIs/UIButtonIcon.png?fileID=993238411&amp;guid=1db49b0b23e634a449b3c7a2d403a816&amp;type=3#UIButtonIcon_Shop&apos;);" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Character" class="ui-bar" style="left: 0; top: 0; width: 500px; height: 140px; flex-direction: row; align-items: flex-start;">
             <ui:VisualElement name="Avatar" style="width: 120px; height: 120px; border-top-left-radius: 50%; border-top-right-radius: 50%; border-bottom-right-radius: 50%; border-bottom-left-radius: 50%; border-top-width: 5px; border-right-width: 5px; border-bottom-width: 5px; border-left-width: 5px; border-left-color: rgb(98, 195, 85); border-right-color: rgb(98, 195, 85); border-top-color: rgb(98, 195, 85); border-bottom-color: rgb(98, 195, 85); opacity: 1; overflow: hidden;">
                 <ui:VisualElement name="Image" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/Docs/Packages/SunnyLand%20Artwork/Sprites/player/idle/player-idle-1.png?fileID=21300000&amp;guid=72de0c64f2c6a498096698322c976a67&amp;type=3#player-idle-1&apos;); -unity-slice-left: 5; -unity-slice-top: 5; -unity-slice-right: 5; -unity-slice-bottom: 5;" />
             </ui:VisualElement>
@@ -17,6 +22,38 @@
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="Ability" style="flex-grow: 1; position: absolute; bottom: 0; left: 0; width: 400px; height: 100px;" />
+        <ui:VisualElement name="Ability" class="ui-bar" style="bottom: 0; right: 0; flex-direction: row-reverse; height: 120px; width: 120px;">
+            <Game.UIs.UIAbilityInfo name="BaseAttack" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="SettingsPanel" class="floating-panel ui-bar hide" style="width: 500px; height: 300px; align-items: center; flex-direction: column; align-self: center; top: 30%;">
+        <ui:VisualElement name="SettingsPanelCloseButton" style="position: absolute; top: 10px; right: 10px; height: 50px; width: 50px; background-image: url(&apos;project://database/Assets/Arts/Textures/UIs/UIButtonIcon.png?fileID=2087662524&amp;guid=1db49b0b23e634a449b3c7a2d403a816&amp;type=3#UIButtonIcon_Cancel&apos;);" />
+        <ui:Label tabindex="-1" text="Settings" parse-escape-sequences="true" display-tooltip-when-elided="true" style="width: auto; height: 60px; -unity-font: url(&apos;project://database/Library/unity%20default%20resources?fileID=10102&amp;guid=0000000000000000e000000000000000&amp;type=0#LegacyRuntime&apos;); font-size: 42px; -unity-text-align: middle-center; -unity-font-style: bold; color: rgb(255, 255, 255);" />
+        <ui:VisualElement name="SettingsPanelMain" style="width: 100%; height: auto; flex-grow: 1;" />
+        <ui:VisualElement name="Buttons" style="height: 120px; width: 100%; flex-direction: row; justify-content: space-around; align-items: center;">
+            <ui:VisualElement name="SettingsPanelGoHomeButton" style="width: 100px; height: 100px; background-image: url(&apos;project://database/Assets/Arts/Textures/UIs/UIButtonIcon.png?fileID=1757955737&amp;guid=1db49b0b23e634a449b3c7a2d403a816&amp;type=3#UIButtonIcon_Home&apos;);" />
+            <ui:VisualElement name="SettingsPanelContinueButton" style="width: 100px; height: 100px; background-image: url(&apos;project://database/Assets/Arts/Textures/UIs/UIButtonIcon.png?fileID=-1964049123&amp;guid=1db49b0b23e634a449b3c7a2d403a816&amp;type=3#UIButtonIcon_Play&apos;);" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="DeathPanel" class="floating-panel hide" style="flex-grow: 1; width: 100%; height: 100%; background-color: rgba(120, 63, 63, 0.48); align-items: center; justify-content: center;">
+        <ui:VisualElement name="DeathContentPanel" class="ui-bar" style="width: 600px; height: 300px; align-items: center;">
+            <ui:Label tabindex="-1" text="You are dead!" parse-escape-sequences="true" display-tooltip-when-elided="true" style="font-size: 50px; -unity-font-style: bold; -unity-text-align: middle-center; color: rgb(255, 255, 255); flex-grow: 1;" />
+            <ui:VisualElement name="Buttons" style="height: 120px; width: 100%; flex-direction: row; justify-content: space-around; align-items: center;">
+                <ui:VisualElement name="DeathPanelGoHomeButton" style="width: 100px; height: 100px; background-image: url(&apos;project://database/Assets/Arts/Textures/UIs/UIButtonIcon.png?fileID=1757955737&amp;guid=1db49b0b23e634a449b3c7a2d403a816&amp;type=3#UIButtonIcon_Home&apos;);" />
+                <ui:VisualElement name="DeathPanelShopButton" style="width: 100px; height: 100px; background-image: url(&apos;project://database/Assets/Arts/Textures/UIs/UIButtonIcon.png?fileID=993238411&amp;guid=1db49b0b23e634a449b3c7a2d403a816&amp;type=3#UIButtonIcon_Shop&apos;);" />
+                <ui:VisualElement name="DeathPanelPlayAgainButton" style="width: 100px; height: 100px; background-image: url(&apos;project://database/Assets/Arts/Textures/UIs/UIButtonIcon.png?fileID=-1552011709&amp;guid=1db49b0b23e634a449b3c7a2d403a816&amp;type=3#UIButtonIcon_Undo&apos;);" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="ConfilmPanel" class="floating-panel ui-bar hide" style="width: 500px; height: 300px; align-items: center; flex-direction: column; align-self: center; top: 30%;">
+        <ui:Label tabindex="-1" text="Are you sure?" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ConfilmPanelHeader" style="width: auto; height: 60px; -unity-font: url(&apos;project://database/Library/unity%20default%20resources?fileID=10102&amp;guid=0000000000000000e000000000000000&amp;type=0#LegacyRuntime&apos;); font-size: 42px; -unity-text-align: middle-center; -unity-font-style: bold; color: rgb(255, 255, 255);" />
+        <ui:Label tabindex="-1" text="Do you want to exit?" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ConfilmPanelContent" style="flex-grow: 1; font-size: 30px; -unity-font-style: bold; -unity-text-align: middle-center; color: rgb(255, 255, 255);" />
+        <ui:VisualElement name="Buttons" style="height: 120px; width: 100%; flex-direction: row; justify-content: space-around; align-items: center;">
+            <ui:VisualElement name="ConfilmPanelNoButton" style="width: 100px; height: 100px; background-image: url(&apos;project://database/Assets/Arts/Textures/UIs/UIButtonIcon.png?fileID=2087662524&amp;guid=1db49b0b23e634a449b3c7a2d403a816&amp;type=3#UIButtonIcon_Cancel&apos;);" />
+            <ui:VisualElement name="ConfilmPanelYesButton" style="width: 100px; height: 100px; background-image: url(&apos;project://database/Assets/Arts/Textures/UIs/UIButtonIcon.png?fileID=-1997949289&amp;guid=1db49b0b23e634a449b3c7a2d403a816&amp;type=3#UIButtonIcon_Check&apos;);" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="LoadingPanel" class="floating-panel hide" style="flex-grow: 1; width: 100%; height: 100%; background-image: url(&apos;project://database/Assets/Docs/Packages/SunnyLand%20Artwork/Environment/back.png?fileID=21300000&amp;guid=8e160a2a620644cd6afef9119dad1093&amp;type=3#back&apos;);">
+        <ui:Label tabindex="-1" text="Loading..." parse-escape-sequences="true" display-tooltip-when-elided="true" style="font-size: 50px; -unity-font-style: italic; position: absolute; right: 5%; bottom: 5%;" />
     </ui:VisualElement>
 </ui:UXML>

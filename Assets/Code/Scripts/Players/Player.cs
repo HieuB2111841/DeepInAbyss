@@ -101,11 +101,18 @@ namespace Game.Players
             Character.Stats.Damage.OnValueChanged += (value) => UI.UIDamage = value;
             Character.Stats.Armor.OnValueChanged += (value) => UI.UIArmor = value;
             // Character.Stats.Speed.OnValueChanged += (value) => UI.UISpeed = value;
+
+            Character.Stats.OnDeath += Character_OnDeath;
         }
 
         private void HandleUI()
         {
+            UI.SetBaseAttackFilter(!Character.CanAttack);
+        }
 
+        private void Character_OnDeath(Entities.Stats.Agent obj)
+        {
+            UI.ShowDeathPanel();
         }
 
         private void Test()
